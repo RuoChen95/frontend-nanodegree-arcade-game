@@ -39,7 +39,16 @@ var Player = function(){
     this.x = 200;
     this.y = 400;
 };
-Player.prototype.update = function(){};
+//实现玩家到达终点后表明玩家胜利以及撞车后游戏重新开始
+Player.prototype.update = function(){
+    if(this.y==0){
+        alert("you win!");
+    }
+    for(i=0; i<4; i++){
+        if(allEnemies[i].x-60<this.x && this.x<allEnemies[i].x+60 && allEnemies[i].y-50<this.y && this.y<allEnemies[i].y+70){
+            location.reload();
+    }}
+};
 Player.prototype.render = function(){
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
@@ -88,14 +97,3 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
-
-//玩家撞车后，游戏重新开始
-for(i=0; i<4; i++){
-if(allEnemies[i].x-60<player.x && player.x<allEnemies[i].x+60 && allEnemies[i].y-50<player.y && player.y<allEnemies[i].y+70){
-    location.reload();
-}}
-
-//玩家获胜后出现相应的动画
-if(player.y==0){
-    alert("you win!");
-}
