@@ -6,7 +6,7 @@ var Enemy = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.x = 0;
+    this.x = -100; //虫子的初始位置，设置-100（而不是0）是为了让虫子的出现更加自然
     this.y = 170*Math.random() + 60;
     this.random = Math.random() * 120 + 60;
 };
@@ -19,7 +19,7 @@ Enemy.prototype.update = function(dt) {
     // all computers.
     //汽车横穿屏幕
     this.x = this.x + this.random*dt;
-    if(this.x>=400){
+    if(this.x>=500){ //虫子的消失位置，设置500（而不是400）是为了让虫子的消失更加自然
         this.x = 0;
         this.y = 170*Math.random() + 60;
         this.random = Math.random() * 120 + 60;
@@ -53,24 +53,18 @@ Player.prototype.render = function(){
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 Player.prototype.handleInput = function(e){ //e代表了用户输入的值
-    if(e == 'left'){
+    if(e == 'left' && this.x - 30 >=0){ //玩家无法移动至屏幕外
         this.x -=30;
     }
-    else if(e == 'up'){
+    else if(e == 'up' && this.y - 30 >=0){
         this.y -=30;
     }
-    else if(e == 'right'){
+    else if(e == 'right' && this.x + 30 <=400){
         this.x +=30;
     }
-    else if(e == 'down'){
+    else if(e == 'down' && this.y + 30 <=400){
         this.y +=30;
     }
-    //玩家无法移动至屏幕外
-    if(this.x<=0) this.x = 0;
-    if(this.x>=400) this.x =400;
-    if(this.y<=0) this.y = 0;
-    if(this.y>=400) this.y =400;
-
 };
 
 // Now instantiate your objects.
