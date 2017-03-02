@@ -20,7 +20,7 @@ Enemy.prototype.update = function(dt) {
     //汽车横穿屏幕
     this.x = this.x + this.random*dt;
     if(this.x>=500){ //虫子的消失位置，设置500（而不是400）是为了让虫子的消失更加自然
-        this.x = 0;
+        this.x = -100; //这里也要设置新出现的虫子更加自然
         this.y = 170*Math.random() + 60;
         this.random = Math.random() * 120 + 60;
     } 
@@ -41,7 +41,7 @@ var Player = function(){
 };
 //实现玩家到达终点后表明玩家胜利以及撞车后游戏重新开始
 Player.prototype.update = function(){
-    if(this.y==0){
+    if(this.y>0 && this.y<30){ //保证条件成立
         alert("you win!");
     }
     for(i=0; i<4; i++){
